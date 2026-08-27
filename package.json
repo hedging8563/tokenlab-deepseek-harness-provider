@@ -1,6 +1,6 @@
 {
   "name": "@tokenlabai/dsh-provider",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TokenLab provider bundle for DeepSeek Harness with native Responses, Messages and Chat routing plus full multimodal and async tools.",
   "type": "module",
   "main": "./lib/index.js",

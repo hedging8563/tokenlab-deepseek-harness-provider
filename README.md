@@ -43,13 +43,13 @@ TOKENLAB_API_KEY=sk-your-tokenlab-key
 Then install the bundle into the profile you use:
 
 ```bash
-dsh plugin --profile web add @tokenlabai/dsh-provider
+dsh plugin --profile web add --workspace-root @tokenlabai/dsh-provider
 ```
 
 For a headless profile:
 
 ```bash
-dsh plugin --profile headless add @tokenlabai/dsh-provider
+dsh plugin --profile headless add --workspace-root @tokenlabai/dsh-provider
 ```
 
 Restart that profile after installation. In the model picker, TokenLab appears as three provider routes:
@@ -129,7 +129,7 @@ The test suite covers native-route selection, route exclusivity, generated patch
 ## Uninstall
 
 ```bash
-dsh plugin --profile web remove @tokenlabai/dsh-provider
+dsh plugin --profile web remove --workspace-root @tokenlabai/dsh-provider
 ```
 
 Restart the profile. Removing the bundle removes its TokenLab routes, MCP tool namespace, and async waiter; it does not delete your TokenLab account or API key.
