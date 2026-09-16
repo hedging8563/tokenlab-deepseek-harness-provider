@@ -67,3 +67,14 @@ test('fails closed when an active model has no Harness-supported protocol', () =
     /gemini-only \(gemini_native_not_supported_by_harness\)/,
   )
 })
+
+// A generic public capability is not an enum of model-specific wire values.
+test('does not invent reasoning efforts from a name or generic reasoning capability', () => {
+  const catalog = buildCatalog([
+    model('gpt-6-astra', 'openai', ['openai_responses'], ['reasoning']),
+    model('opaque-reasoner', 'other', ['openai_chat_completions'], ['reasoning']),
+  ])
+  for (const routeModel of Object.values(catalog.routes).flat()) {
+    assert.equal(Object.hasOwn(routeModel, 'reasoningEfforts'), false)
+  }
+})

@@ -3,7 +3,7 @@
   "source": {
     "list": "https://api.tokenlab.sh/v1/models?category=chat",
     "detailTemplate": "https://api.tokenlab.sh/v1/models/{id}",
-    "checkedAt": "2026-08-26T22:33:00.659Z"
+    "checkedAt": "2026-09-16T08:56:12.153Z"
   },
   "routingPolicy": {
     "description": "Prefer the exact owner-native format when DSH supports it; otherwise use the first supported compatibility format without guessing from model ids.",
@@ -19,13 +19,13 @@
     "geminiNative": "unsupported-by-dsh-fallback-to-chat-when-declared"
   },
   "counts": {
-    "source": 134,
-    "routed": 134,
+    "source": 124,
+    "routed": 124,
     "excluded": 0,
     "byRoute": {
-      "responses": 27,
-      "messages": 8,
-      "chat": 99
+      "responses": 23,
+      "messages": 9,
+      "chat": 92
     }
   },
   "routes": {
@@ -260,25 +260,6 @@
       },
       {
         "excluded": false,
-        "id": "gpt-5.3-codex-spark",
-        "name": "gpt-5.3-codex-spark",
-        "ownedBy": "openai",
-        "route": "responses",
-        "selectedFormat": "openai_responses",
-        "selectionReason": "owner_native",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "openai_responses"
-        ],
-        "contextWindow": 400000,
-        "maxTokens": 128000,
-        "input": [
-          "text",
-          "image"
-        ]
-      },
-      {
-        "excluded": false,
         "id": "gpt-5.4",
         "name": "gpt-5.4",
         "ownedBy": "openai",
@@ -450,8 +431,8 @@
       },
       {
         "excluded": false,
-        "id": "o1",
-        "name": "o1",
+        "id": "gpt-6-astra",
+        "name": "gpt-6-astra",
         "ownedBy": "openai",
         "route": "responses",
         "selectedFormat": "openai_responses",
@@ -460,27 +441,8 @@
           "openai_chat_completions",
           "openai_responses"
         ],
-        "contextWindow": 200000,
-        "maxTokens": 100000,
-        "input": [
-          "text",
-          "image"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "o1-pro",
-        "name": "o1-pro",
-        "ownedBy": "openai",
-        "route": "responses",
-        "selectedFormat": "openai_responses",
-        "selectionReason": "owner_native",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "openai_responses"
-        ],
-        "contextWindow": 200000,
-        "maxTokens": 100000,
+        "contextWindow": 1050000,
+        "maxTokens": 128000,
         "input": [
           "text",
           "image"
@@ -504,43 +466,6 @@
           "text",
           "image"
         ]
-      },
-      {
-        "excluded": false,
-        "id": "o3-mini",
-        "name": "o3-mini",
-        "ownedBy": "openai",
-        "route": "responses",
-        "selectedFormat": "openai_responses",
-        "selectionReason": "owner_native",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "openai_responses"
-        ],
-        "contextWindow": 200000,
-        "maxTokens": 100000,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "o4-mini",
-        "name": "o4-mini",
-        "ownedBy": "openai",
-        "route": "responses",
-        "selectedFormat": "openai_responses",
-        "selectionReason": "owner_native",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "openai_responses"
-        ],
-        "contextWindow": 200000,
-        "maxTokens": 100000,
-        "input": [
-          "text",
-          "image"
-        ]
       }
     ],
     "messages": [
@@ -548,6 +473,25 @@
         "excluded": false,
         "id": "claude-fable-5",
         "name": "claude-fable-5",
+        "ownedBy": "anthropic",
+        "route": "messages",
+        "selectedFormat": "anthropic_messages",
+        "selectionReason": "owner_native",
+        "acceptedRequestFormats": [
+          "anthropic_messages",
+          "openai_chat_completions"
+        ],
+        "contextWindow": 1000000,
+        "maxTokens": 128000,
+        "input": [
+          "text",
+          "image"
+        ]
+      },
+      {
+        "excluded": false,
+        "id": "claude-fable-5-1",
+        "name": "claude-fable-5-1",
         "ownedBy": "anthropic",
         "route": "messages",
         "selectedFormat": "anthropic_messages",
@@ -717,24 +661,6 @@
       },
       {
         "excluded": false,
-        "id": "deepseek-v3-2",
-        "name": "deepseek-v3-2",
-        "ownedBy": "deepseek",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 163840,
-        "maxTokens": 163840,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
         "id": "deepseek-v4-flash",
         "name": "deepseek-v4-flash",
         "ownedBy": "deepseek",
@@ -742,9 +668,9 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 384000,
@@ -761,9 +687,9 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 384000,
@@ -781,14 +707,34 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 384000,
         "input": [
           "text"
+        ]
+      },
+      {
+        "excluded": false,
+        "id": "deepseek-v4.1-flash",
+        "name": "deepseek-v4.1-flash",
+        "ownedBy": "deepseek",
+        "route": "chat",
+        "selectedFormat": "openai_chat_completions",
+        "selectionReason": "harness_fallback",
+        "acceptedRequestFormats": [
+          "anthropic_messages",
+          "openai_chat_completions",
+          "openai_responses"
+        ],
+        "contextWindow": 1000000,
+        "maxTokens": 384000,
+        "input": [
+          "text",
+          "image"
         ]
       },
       {
@@ -936,23 +882,6 @@
       },
       {
         "excluded": false,
-        "id": "farui-plus",
-        "name": "farui-plus",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions"
-        ],
-        "contextWindow": 12000,
-        "maxTokens": 2000,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
         "id": "gemini-2.5-pro",
         "name": "gemini-2.5-pro",
         "ownedBy": "google",
@@ -979,8 +908,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "gemini_generate_content"
+          "gemini_generate_content",
+          "openai_chat_completions"
         ],
         "contextWindow": 1048576,
         "maxTokens": 65536,
@@ -1093,8 +1022,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "gemini_generate_content"
+          "gemini_generate_content",
+          "openai_chat_completions"
         ],
         "contextWindow": 1048576,
         "maxTokens": 65536,
@@ -1105,20 +1034,21 @@
       },
       {
         "excluded": false,
-        "id": "glm-4.7",
-        "name": "glm-4.7",
-        "ownedBy": "zhipu",
+        "id": "gemini-3.8-flash",
+        "name": "gemini-3.8-flash",
+        "ownedBy": "google",
         "route": "chat",
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "gemini_generate_content",
+          "openai_chat_completions"
         ],
-        "contextWindow": 128000,
-        "maxTokens": 8192,
+        "contextWindow": 1048576,
+        "maxTokens": 65536,
         "input": [
-          "text"
+          "text",
+          "image"
         ]
       },
       {
@@ -1130,8 +1060,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 200000,
         "maxTokens": 128000,
@@ -1148,8 +1078,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 200000,
         "maxTokens": 128000,
@@ -1166,8 +1096,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 200000,
         "maxTokens": 128000,
@@ -1184,9 +1114,9 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 128000,
@@ -1203,9 +1133,9 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 128000,
@@ -1222,9 +1152,9 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "openai_responses",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 1000000,
         "maxTokens": 131072,
@@ -1271,6 +1201,23 @@
       },
       {
         "excluded": false,
+        "id": "gpt-audio-1.5",
+        "name": "gpt-audio-1.5",
+        "ownedBy": "openai",
+        "route": "chat",
+        "selectedFormat": "openai_chat_completions",
+        "selectionReason": "harness_fallback",
+        "acceptedRequestFormats": [
+          "openai_chat_completions"
+        ],
+        "contextWindow": 128000,
+        "maxTokens": 16384,
+        "input": [
+          "text"
+        ]
+      },
+      {
+        "excluded": false,
         "id": "gpt-oss-120b",
         "name": "gpt-oss-120b",
         "ownedBy": "openai",
@@ -1301,25 +1248,6 @@
         "maxTokens": 32768,
         "input": [
           "text"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "grok-4-fast",
-        "name": "grok-4-fast",
-        "ownedBy": "xai",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "openai_responses"
-        ],
-        "contextWindow": 2000000,
-        "maxTokens": 16384,
-        "input": [
-          "text",
-          "image"
         ]
       },
       {
@@ -1432,7 +1360,8 @@
         "contextWindow": 500000,
         "maxTokens": 131072,
         "input": [
-          "text"
+          "text",
+          "image"
         ]
       },
       {
@@ -1541,23 +1470,6 @@
       },
       {
         "excluded": false,
-        "id": "hy3-preview",
-        "name": "hy3-preview",
-        "ownedBy": "tencent",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions"
-        ],
-        "contextWindow": 196608,
-        "maxTokens": 131072,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
         "id": "kimi-k2.5",
         "name": "kimi-k2.5",
         "ownedBy": "moonshot",
@@ -1583,6 +1495,7 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions"
         ],
         "contextWindow": 262144,
@@ -1601,8 +1514,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 262144,
         "maxTokens": 131072,
@@ -1620,8 +1533,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 262144,
         "maxTokens": 131072,
@@ -1639,6 +1552,7 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions"
         ],
         "contextWindow": 1048576,
@@ -1675,8 +1589,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 1048576,
         "maxTokens": 1048576,
@@ -1741,24 +1655,6 @@
       },
       {
         "excluded": false,
-        "id": "minimax-m2.5",
-        "name": "minimax-m2.5",
-        "ownedBy": "minimax",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 204800,
-        "maxTokens": 204800,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
         "id": "minimax-m2.5-highspeed",
         "name": "minimax-m2.5-highspeed",
         "ownedBy": "minimax",
@@ -1784,8 +1680,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 200000,
         "maxTokens": 128000,
@@ -1872,8 +1768,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 997952,
         "maxTokens": 32768,
@@ -1890,8 +1786,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 8000,
         "maxTokens": 4096,
@@ -1908,8 +1804,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 30720,
         "maxTokens": 8192,
@@ -1926,8 +1822,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 8192,
         "maxTokens": 8192,
@@ -1944,8 +1840,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 8192,
         "maxTokens": 8192,
@@ -1962,50 +1858,13 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 8192,
         "maxTokens": 8192,
         "input": [
           "text"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "qwen-mt-turbo",
-        "name": "qwen-mt-turbo",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 8192,
-        "maxTokens": 8192,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "qwen-omni-turbo",
-        "name": "qwen-omni-turbo",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 30720,
-        "maxTokens": 2048,
-        "input": [
-          "text",
-          "image"
         ]
       },
       {
@@ -2017,8 +1876,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 997952,
         "maxTokens": 32768,
@@ -2052,29 +1911,11 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 30000,
         "maxTokens": 8192,
-        "input": [
-          "text",
-          "image"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "qwen2.5-omni-7b",
-        "name": "qwen2.5-omni-7b",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions"
-        ],
-        "contextWindow": 30720,
-        "maxTokens": 2048,
         "input": [
           "text",
           "image"
@@ -2089,8 +1930,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 997952,
         "maxTokens": 65536,
@@ -2107,8 +1948,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 49152,
         "maxTokens": 16384,
@@ -2126,8 +1967,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 260096,
         "maxTokens": 32768,
@@ -2145,8 +1986,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 260096,
         "maxTokens": 65536,
@@ -2163,8 +2004,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 65536,
@@ -2181,8 +2022,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 49152,
         "maxTokens": 16384,
@@ -2200,8 +2041,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 196608,
         "maxTokens": 65536,
@@ -2219,8 +2060,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 196608,
         "maxTokens": 65536,
@@ -2238,8 +2079,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 65536,
@@ -2256,32 +2097,14 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 131072,
         "maxTokens": 32768,
         "input": [
           "text",
           "image"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "qwen3.6-flash",
-        "name": "qwen3.6-flash",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 991808,
-        "maxTokens": 65536,
-        "input": [
-          "text"
         ]
       },
       {
@@ -2293,28 +2116,10 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 262144,
-        "maxTokens": 65536,
-        "input": [
-          "text"
-        ]
-      },
-      {
-        "excluded": false,
-        "id": "qwen3.6-plus",
-        "name": "qwen3.6-plus",
-        "ownedBy": "alibaba",
-        "route": "chat",
-        "selectedFormat": "openai_chat_completions",
-        "selectionReason": "harness_fallback",
-        "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
-        ],
-        "contextWindow": 991808,
         "maxTokens": 65536,
         "input": [
           "text"
@@ -2329,8 +2134,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 65536,
@@ -2347,8 +2152,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 65536,
@@ -2365,8 +2170,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 131072,
@@ -2383,8 +2188,28 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
+          "anthropic_messages",
+          "openai_chat_completions"
+        ],
+        "contextWindow": 991808,
+        "maxTokens": 131072,
+        "input": [
+          "text",
+          "image"
+        ]
+      },
+      {
+        "excluded": false,
+        "id": "qwen3.8-flash",
+        "name": "qwen3.8-flash",
+        "ownedBy": "alibaba",
+        "route": "chat",
+        "selectedFormat": "openai_chat_completions",
+        "selectionReason": "harness_fallback",
+        "acceptedRequestFormats": [
+          "anthropic_messages",
           "openai_chat_completions",
-          "anthropic_messages"
+          "openai_responses"
         ],
         "contextWindow": 991808,
         "maxTokens": 131072,
@@ -2402,8 +2227,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 991808,
         "maxTokens": 131072,
@@ -2472,8 +2297,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 28672,
         "maxTokens": 4096,
@@ -2490,8 +2315,8 @@
         "selectedFormat": "openai_chat_completions",
         "selectionReason": "harness_fallback",
         "acceptedRequestFormats": [
-          "openai_chat_completions",
-          "anthropic_messages"
+          "anthropic_messages",
+          "openai_chat_completions"
         ],
         "contextWindow": 28672,
         "maxTokens": 4096,

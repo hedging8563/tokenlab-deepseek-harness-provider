@@ -31,7 +31,7 @@ export const Config: z<Config> = z.object({
   apiKeyEnv: z.string().default(DEFAULT_API_KEY_ENV),
   defaultPollIntervalMs: z.number().step(1).min(250).max(60_000).default(DEFAULT_POLL_INTERVAL_MS),
   defaultWaitMs: z.number().step(1).min(1_000).max(MAX_WAIT_MS).default(DEFAULT_WAIT_MS),
-  mcpToolProfile: z.union(['catalog', 'core', 'full']).default('full'),
+  mcpToolProfile: z.union(['catalog', 'core', 'full']).default('core'),
   mcpSchemaMode: z.union(['portable', 'exact', 'strict']).default('portable'),
   mcpToolCallTimeoutMs: z.number().step(1).min(1_000).max(MAX_WAIT_MS).default(180_000),
   mcpFailOnStartupError: z.boolean().default(true),
@@ -157,7 +157,7 @@ export async function apply(ctx: Context, config: Config = {}): Promise<void> {
     env: {
       TOKENLAB_API_BASE: apiBase,
       TOKENLAB_API_KEY: process.env[apiKeyEnv] ?? '',
-      TOKENLAB_MCP_TOOL_PROFILE: config.mcpToolProfile ?? 'full',
+      TOKENLAB_MCP_TOOL_PROFILE: config.mcpToolProfile ?? 'core',
       TOKENLAB_MCP_SCHEMA_MODE: config.mcpSchemaMode ?? 'portable',
       ...optionalEnvironment('TOKENLAB_REQUEST_TIMEOUT_MS'),
       ...optionalEnvironment('TOKENLAB_MCP_MAX_FILE_BYTES'),

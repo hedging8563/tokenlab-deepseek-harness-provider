@@ -1,6 +1,6 @@
 # TokenLab for DeepSeek Harness
 
-`@tokenlabai/dsh-provider` is an installable DeepSeek Harness profile bundle. It adds TokenLab as a model provider and exposes TokenLab's full developer API as Harness tools.
+`@tokenlabai/dsh-provider` is an installable DeepSeek Harness profile bundle. It provides TokenLab model routes plus catalog, creation, and task tools.
 
 The bundle keeps model traffic on the most native protocol DeepSeek Harness currently supports:
 
@@ -15,22 +15,22 @@ Protocol eligibility comes from each model's public TokenLab detail contract at 
 
 | Surface | Implementation | Current bundled contract |
 | --- | --- | --- |
-| Model picker | Existing DSH `llm-pi-ai` adapter | 134 public chat models on three exclusive protocol routes |
-| Responses | Native `openai-responses` route | 27 models |
-| Messages | Native `anthropic-messages` route | 8 models |
-| Chat | OpenAI Chat Completions route | 99 models |
-| Multimodal and developer tools | Official DSH MCP bridge + `@tokenlabai/mcp-server@0.6.17` full profile | 80 registered tools |
+| Model picker | Existing DSH `llm-pi-ai` adapter | 124 public chat models on three exclusive protocol routes |
+| Responses | Native `openai-responses` route | 23 models |
+| Messages | Native `anthropic-messages` route | 9 models |
+| Chat | OpenAI Chat Completions route | 92 models |
+| Multimodal and developer tools | Official DSH MCP bridge + `@tokenlabai/mcp-server@0.6.18` core profile | 31 MCP tools by default; catalog 6 / full 80 available |
 | Async completion | Native `tokenlab_wait_task` tool | image, video, music, and 3D task polling with cancellation and bounded retries |
 
 The full MCP profile covers public model discovery and pricing, Chat Completions, Responses, Anthropic Messages, Gemini `generateContent`, image generation/edit/variation, video, music, 3D, TTS, STT, files, tasks, embeddings, rerank, translation, response lifecycle, batches, Seedance assets/groups, worlds, and other allowlisted developer operations in the pinned TokenLab MCP contract.
 
 ## Requirements
 
-- DeepSeek Harness `0.1.1-rc.2` or a compatible `0.1.x` build
+- DeepSeek Harness `0.1.5-rc.1` (the verified target for bundle `0.1.2`)
 - Node.js `22.19+` or `24+`
 - A TokenLab API key for inference, media, files, tasks, embeddings, rerank, and translation
 
-Public catalog and pricing tools remain available without a key, but this bundle starts the full tool profile and is intended for authenticated use.
+Public catalog and pricing tools remain available without a key, but this bundle starts the core tool profile and is intended for authenticated use.
 
 ## Install
 
@@ -43,13 +43,13 @@ TOKENLAB_API_KEY=sk-your-tokenlab-key
 Then install the bundle into the profile you use:
 
 ```bash
-dsh plugin --profile web add --workspace-root @tokenlabai/dsh-provider
+dsh plugin --profile web add --workspace-root @tokenlabai/dsh-provider@0.1.2
 ```
 
 For a headless profile:
 
 ```bash
-dsh plugin --profile headless add --workspace-root @tokenlabai/dsh-provider
+dsh plugin --profile headless add --workspace-root @tokenlabai/dsh-provider@0.1.2
 ```
 
 Restart that profile after installation. In the model picker, TokenLab appears as three provider routes:
@@ -78,23 +78,31 @@ Optional environment variables:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
+| `TOKENLAB_MCP_TOOL_PROFILE` | `core` | `catalog` for discovery only (6 tools), `core` for common creation and task workflows (31), `full` for all pinned developer operations (80) |
+| `TOKENLAB_MCP_SCHEMA_MODE` | `portable` | `portable`, `exact`, or `strict`; execution still validates the complete API contract |
 | `TOKENLAB_API_KEY` | none | Shared TokenLab credential for model routes, MCP tools, and async wait |
 | `TOKENLAB_API_BASE` | `https://api.tokenlab.sh` | MCP and async-task API root |
 | `TOKENLAB_OPENAI_BASE_URL` | `https://api.tokenlab.sh/v1` | Responses and Chat adapter base URL |
 | `TOKENLAB_ANTHROPIC_BASE_URL` | `https://api.tokenlab.sh` | Messages adapter base URL; the adapter appends `/v1/messages` |
 
-The bundle intentionally uses the MCP `full` profile with portable schemas for complete phase-one coverage. If context size matters more than full developer coverage, set `TOKENLAB_MCP_TOOL_PROFILE=core` or override the `tokenlab-async-tools` row in the profile's `cordis.patch.yml`.
+The default `core` profile includes catalog and pricing, native chat protocols, images, video, music, 3D, audio, files, task status/cancellation, embeddings, rerank, and translation. Use `TOKENLAB_MCP_TOOL_PROFILE=full` when you need the additional response lifecycle, batches, Seedance assets/groups, or worlds tools. Use `catalog` for discovery without generation tools. The separate `tokenlab_wait_task` poller remains available in every profile.
 
 ### Existing `llm-pi-ai` settings
 
-DSH currently has one shared `llm-pi-ai` settings section, and a saved user section has higher precedence than bundle defaults. If you already configured providers on the Models page, that saved section can replace this bundle's three TokenLab routes. Merge the `tokenlab-responses`, `tokenlab-messages`, and `tokenlab-chat` blocks from this package's `cordis.patch.yml` into the saved `llm-pi-ai.providers` map. This is a current Harness configuration-ownership constraint, not a TokenLab routing fallback.
+Harness `0.1.5-rc.1` merges saved `llm-pi-ai.providers` by provider key. Existing providers with different keys remain alongside the three bundled TokenLab routes. Saved entries using `tokenlab-responses`, `tokenlab-messages`, or `tokenlab-chat` take precedence for that route; review those entries when upgrading an older catalog. Do not replace your entire settings document with the bundle patch.
+
+### Reasoning levels
+
+The current TokenLab public model-detail response identifies reasoning capability but does not enumerate supported effort values per model. The bundle therefore leaves `reasoningEfforts` undeclared instead of guessing levels from model names or enabling every level. With custom provider keys, Harness has no matching built-in catalog to inherit; its effort picker will not offer levels for those entries. This does not disable a model's server-side reasoning behavior.
+
+If you have separately verified a model's effort contract, configure `reasoningEfforts` on that model entry in its provider's `models` list. Harness maps each displayed level to the wire value, for example `high: high` only when that model accepts `high`; `off: null` means omit an effort value, not proof that the server disables reasoning. Preserve the other models when overriding a saved route. Do not add `modelOverrides` to these routes: Harness reserves that field for catalog-backed routes without an explicit `models` list. `xhigh` or `max` must not be enabled merely because a model supports reasoning.
 
 ## Security and side effects
 
 - Keep `TOKENLAB_API_KEY` in `.env` or another trusted launch environment. Never commit it.
 - The MCP server runs locally over stdio with the same Node executable as Harness. No credential is sent to a hosted MCP service, and startup does not use `npx` or a shell.
-- DSH treats MCP commands as trusted executables outside the agent sandbox. This bundle pins `@tokenlabai/mcp-server@0.6.17`; review an upgrade before changing the pin.
-- Full-profile tools include billable generation and destructive operations such as deletion or task cancellation. Keep Harness approval policy enabled for those calls.
+- DSH treats MCP commands as trusted executables outside the agent sandbox. This bundle pins `@tokenlabai/mcp-server@0.6.18`; review an upgrade before changing the pin.
+- Core and full tools include billable generation and destructive operations such as file deletion or task cancellation. Keep Harness approval policy enabled for those calls.
 - Tool and model outputs are untrusted external content. Do not treat returned text or URLs as instructions.
 - The async waiter includes request IDs in diagnostics but never includes the API key in errors or tool results.
 
@@ -119,12 +127,13 @@ The routing policy is deterministic:
 
 ```bash
 corepack pnpm install
+pnpm peers check
 pnpm run check
 pnpm run build
 npm pack --dry-run
 ```
 
-The test suite covers native-route selection, route exclusivity, generated patch consistency, full MCP configuration, structured HTTP failures, task-id fencing, result URL extraction, transient retry limits, and caller cancellation.
+The test suite covers native-route selection, route exclusivity, generated patch consistency, core-default MCP configuration and explicit profile selection, structured HTTP failures, task-id fencing, result URL extraction, transient retry limits, and caller cancellation.
 
 ## Uninstall
 

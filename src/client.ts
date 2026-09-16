@@ -1,4 +1,4 @@
-import type { JsonValue } from '@deepseek-ai/dsh-tools'
+import type { JsonValue } from '@deepseek-ai/dsh-util-values'
 
 const TERMINAL_STATUSES = new Set(['completed', 'failed', 'succeeded', 'cancelled', 'expired'])
 const RETRYABLE_STATUS_CODES = new Set([408, 409, 425, 429])

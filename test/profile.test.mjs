@@ -10,7 +10,7 @@ function parsePatch(text) {
   return YAML.parse(withoutJsTags)
 }
 
-test('bundle patch exposes exclusive native routes, full MCP, and async wait', async () => {
+test('bundle patch exposes exclusive native routes, core MCP by default, and async wait', async () => {
   const [patchText, catalogText] = await Promise.all([
     readFile(new URL('cordis.patch.yml', root), 'utf8'),
     readFile(new URL('generated/model-routes.json', root), 'utf8'),
@@ -35,7 +35,21 @@ test('bundle patch exposes exclusive native routes, full MCP, and async wait', a
   const inserted = patch.find(entry => Array.isArray(entry.insert)).insert
   const waiter = inserted.find(entry => entry.id === 'tokenlab-async-tools')
   assert.equal(waiter.name, '@tokenlabai/dsh-provider')
-  assert.match(waiter.config.mcpToolProfile, /TOKENLAB_MCP_TOOL_PROFILE/)
-  assert.match(waiter.config.mcpSchemaMode, /TOKENLAB_MCP_SCHEMA_MODE/)
+  assert.equal(waiter.config.mcpToolProfile, "js:process.env.TOKENLAB_MCP_TOOL_PROFILE ?? 'core'")
+  assert.equal(waiter.config.mcpSchemaMode, "js:process.env.TOKENLAB_MCP_SCHEMA_MODE ?? 'portable'")
   assert.equal(waiter.config.mcpFailOnStartupError, true)
+})
+
+test('runtime configuration preserves explicit MCP profiles and schema modes', async () => {
+  const { Config } = await import('../src/index.ts')
+  assert.equal(Config({}).mcpToolProfile, 'core')
+  assert.equal(Config({}).mcpSchemaMode, 'portable')
+  for (const mcpToolProfile of ['catalog', 'core', 'full']) {
+    for (const mcpSchemaMode of ['portable', 'exact', 'strict']) {
+      const config = Config({ mcpToolProfile, mcpSchemaMode })
+      assert.equal(config.mcpToolProfile, mcpToolProfile)
+      assert.equal(config.mcpSchemaMode, mcpSchemaMode)
+    }
+  }
+  assert.throws(() => Config({ mcpToolProfile: 'unknown' }))
 })

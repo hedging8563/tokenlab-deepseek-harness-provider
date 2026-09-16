@@ -62,7 +62,7 @@ function render(catalog) {
     '        apiKeyEnv: TOKENLAB_API_KEY',
     '        defaultPollIntervalMs: 5000',
     '        defaultWaitMs: 900000',
-    "        mcpToolProfile: !!js process.env.TOKENLAB_MCP_TOOL_PROFILE ?? 'full'",
+    "        mcpToolProfile: !!js process.env.TOKENLAB_MCP_TOOL_PROFILE ?? 'core'",
     "        mcpSchemaMode: !!js process.env.TOKENLAB_MCP_SCHEMA_MODE ?? 'portable'",
     '        mcpToolCallTimeoutMs: 180000',
     '        mcpFailOnStartupError: true',
