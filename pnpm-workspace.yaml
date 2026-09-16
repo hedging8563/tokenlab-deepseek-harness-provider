@@ -3,6 +3,10 @@ allowBuilds:
 onlyBuiltDependencies:
   - esbuild
 
+# Reviewed TokenLab release: keep the age policy for every other dependency/version.
+minimumReleaseAgeExclude:
+  - '@tokenlabai/mcp-server@0.6.19'
+
 # Keep the SDK test graph on the target release; several upstream latest tags still point at 0.1.1.
 overrides:
   '@deepseek-ai/dsh-agent': 0.1.5-rc.1

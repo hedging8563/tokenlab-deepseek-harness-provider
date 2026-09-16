@@ -1,6 +1,15 @@
 # Changelog
 
-## 0.1.2
+## 0.1.3
+
+- Ships the model, SDK, and default-tool updates prepared in the unpublished 0.1.2 candidate.
+- Pins TokenLab MCP 0.6.19, retaining request hints and recommended requests alongside structured error/retry fields.
+- Records an exact-version dependency-age exception for the reviewed MCP release; every other dependency keeps the existing policy.
+- Verifies frozen installation with fresh package and metadata caches.
+
+## 0.1.2 — not published
+
+The source tag exists, but CI and the publish workflow stopped at the minimum-release-age check before npm publication. Superseded by 0.1.3.
 
 - Refreshed the public model snapshot to 124 exclusive routes (23 Responses, 9 Messages, 92 Chat), including GPT-6 Astra and the current model input capabilities.
 - Pinned TokenLab MCP 0.6.18 for current delivery/idempotency parameters, media input limits, portable schemas, and structured recovery errors.

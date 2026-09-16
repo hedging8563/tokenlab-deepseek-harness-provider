@@ -19,20 +19,22 @@ Protocol eligibility comes from each model's public TokenLab detail contract at 
 | Responses | Native `openai-responses` route | 23 models |
 | Messages | Native `anthropic-messages` route | 9 models |
 | Chat | OpenAI Chat Completions route | 92 models |
-| Multimodal and developer tools | Official DSH MCP bridge + `@tokenlabai/mcp-server@0.6.18` core profile | 31 MCP tools by default; catalog 6 / full 80 available |
+| Multimodal and developer tools | Official DSH MCP bridge + `@tokenlabai/mcp-server@0.6.19` core profile | 31 MCP tools by default; catalog 6 / full 80 available |
 | Async completion | Native `tokenlab_wait_task` tool | image, video, music, and 3D task polling with cancellation and bounded retries |
 
 The full MCP profile covers public model discovery and pricing, Chat Completions, Responses, Anthropic Messages, Gemini `generateContent`, image generation/edit/variation, video, music, 3D, TTS, STT, files, tasks, embeddings, rerank, translation, response lifecycle, batches, Seedance assets/groups, worlds, and other allowlisted developer operations in the pinned TokenLab MCP contract.
 
 ## Requirements
 
-- DeepSeek Harness `0.1.5-rc.1` (the verified target for bundle `0.1.2`)
+- DeepSeek Harness `0.1.5-rc.1` (the verified target for bundle `0.1.3`)
 - Node.js `22.19+` or `24+`
 - A TokenLab API key for inference, media, files, tasks, embeddings, rerank, and translation
 
 Public catalog and pricing tools remain available without a key, but this bundle starts the core tool profile and is intended for authenticated use.
 
 ## Install
+
+Version `0.1.2` was tagged but was not published to npm because its release workflow stopped at the dependency-age check. Install `0.1.3` for the current bundle.
 
 Put the key in the project `.env` or the Harness-home `.env`. DSH loads those files into the launch environment before resolving bundle configuration and before starting the MCP child process.
 
@@ -43,13 +45,13 @@ TOKENLAB_API_KEY=sk-your-tokenlab-key
 Then install the bundle into the profile you use:
 
 ```bash
-dsh plugin --profile web add --workspace-root @tokenlabai/dsh-provider@0.1.2
+dsh plugin --profile web add --workspace-root @tokenlabai/dsh-provider@0.1.3
 ```
 
 For a headless profile:
 
 ```bash
-dsh plugin --profile headless add --workspace-root @tokenlabai/dsh-provider@0.1.2
+dsh plugin --profile headless add --workspace-root @tokenlabai/dsh-provider@0.1.3
 ```
 
 Restart that profile after installation. In the model picker, TokenLab appears as three provider routes:
@@ -59,6 +61,20 @@ Restart that profile after installation. In the model picker, TokenLab appears a
 - `TokenLab · Chat`
 
 Each model ID appears on exactly one route.
+
+### Dependency release age
+
+Harness forwards `plugin` commands to your installed pnpm. The normal pnpm 11 fresh-add flow records exact exceptions for selected releases that are less than a day old. A frozen install or an explicitly strict age policy can still reject them; this package's repository settings do not configure your Harness profile.
+
+If an age check rejects this release, wait for your configured age window, or review the exact published versions and merge only these entries into the profile's existing `pnpm-workspace.yaml` (under `$DSH_HOME/profiles/web` for the web profile):
+
+```yaml
+minimumReleaseAgeExclude:
+  - '@tokenlabai/dsh-provider@0.1.3'
+  - '@tokenlabai/mcp-server@0.6.19'
+```
+
+Replace older exclusions for these same two package names instead of adding duplicate selectors; preserve unrelated settings and exclusions, then repeat the same `dsh plugin` command. This does not disable age checks for other packages or versions.
 
 ## Use multimedia and async tasks
 
@@ -101,7 +117,7 @@ If you have separately verified a model's effort contract, configure `reasoningE
 
 - Keep `TOKENLAB_API_KEY` in `.env` or another trusted launch environment. Never commit it.
 - The MCP server runs locally over stdio with the same Node executable as Harness. No credential is sent to a hosted MCP service, and startup does not use `npx` or a shell.
-- DSH treats MCP commands as trusted executables outside the agent sandbox. This bundle pins `@tokenlabai/mcp-server@0.6.18`; review an upgrade before changing the pin.
+- DSH treats MCP commands as trusted executables outside the agent sandbox. This bundle pins `@tokenlabai/mcp-server@0.6.19`; review an upgrade before changing the pin.
 - Core and full tools include billable generation and destructive operations such as file deletion or task cancellation. Keep Harness approval policy enabled for those calls.
 - Tool and model outputs are untrusted external content. Do not treat returned text or URLs as instructions.
 - The async waiter includes request IDs in diagnostics but never includes the API key in errors or tool results.
